@@ -25,7 +25,11 @@ export default class Login extends Component{
       this.state={
           currentText:"",
           isModalVisible: false,
-          currentOTP: ""
+          currentOTP: "",
+          pin1: "",
+          pin2: "",
+          pin3: "",
+          pin4: ""
       }
   }  
   changeText(value){
@@ -45,7 +49,7 @@ export default class Login extends Component{
     });
   }
   submitOTP(){
-    console.log(this.state.currentOTP);
+    console.log(this.state.pin1+this.state.pin2+this.state.pin3+this.state.pin4);
     this.setState({
       isModalVisible: false
     });
@@ -65,8 +69,9 @@ export default class Login extends Component{
         style={styles.textInput}
         placeholder="Enter your Number"
         value={this.state.currentText}
+        keyboardType={'numeric'}
         onChangeText={(value) => this.changeText(value)} />
-        <TouchableOpacity onPress={() => this.submitNumber()} style={[s.btnTouchable, styles.buttons]} >
+        <TouchableOpacity onPress={() => this.submitNumber()} style={[s.btnTouchable, styles.submitNumberButton]} >
          <View style={[s.btn, s.btnPrimary]}>
          <Text style={[s.btnText, s.btnTextPrimary]}>GET OTP</Text>
          </View>
@@ -77,12 +82,65 @@ export default class Login extends Component{
         isVisible={this.state.isModalVisible}
         style={styles.modal}>
           <Text style={{textAlign:"center", fontWeight:"bold"}}>We've sent an OTP to your number</Text>
-          <TextInput
-          style={styles.textInput}
-          placeholder="Enter OTP"
-          value={this.state.currentOTP}
-          onChangeText={(value) => this.changeOTP(value)} />
-         <TouchableOpacity onPress={() => this.submitOTP()} style={[s.btnTouchable, styles.buttons]} >
+          <View style={{flex : 1}}>
+          <View style={{flex:0.6,justifyContent:'space-evenly',flexDirection: "row"}}>
+             <TextInput
+                 ref={'pin1ref'}
+                 maxLength={1}
+                 //placeholder = {"Enter your name"}
+                 onChangeText={(pin1)=>{
+                 this.setState({pin1:pin1})
+                 if(pin1 !=""){
+                     this.refs.pin2ref.focus()
+                 }
+                 }}
+                 value={this.state.pin1}
+                 style = {styles.OTPinput}
+                 keyboardType={'numeric'}
+          
+             />
+             <TextInput 
+                 ref={'pin2ref'}
+                 maxLength={1}
+                 onChangeText={(pin2)=>
+                 {this.setState({pin2:pin2})
+                 if(pin2 !=""){
+                     this.refs.pin3ref.focus()
+                 }
+                 }}
+                 value={this.state.pin2}
+                 //placeholder = {"Enter your name"}
+                 style = {styles.OTPinput}
+                 keyboardType={'numeric'}
+             />
+             <TextInput 
+                 ref={'pin3ref'}
+                 maxLength={1}
+                 onChangeText={(pin3)=>
+                 {this.setState({pin3:pin3})
+                 if(pin3 !=""){
+                     this.refs.pin4ref.focus()
+                 }
+                 }}
+                 value={this.state.pin3}
+                 //placeholder = {"Enter your name"}
+                 style = {styles.OTPinput}
+                 keyboardType={'numeric'}
+             />
+            <TextInput 
+                 ref={'pin4ref'}
+                 maxLength={1}
+                 onChangeText={(pin4)=> {this.setState({pin4:pin4})
+                 }
+                }
+                 value={this.state.pin4}
+                 //placeholder = {"Enter your name"}
+                 style = {styles.OTPinput}
+                 keyboardType={'numeric'}
+             />
+          </View>
+      </View>
+         <TouchableOpacity onPress={() => this.submitOTP()} style={[s.btnTouchable, styles.submitOTPButton]} >
            <View style={[s.btn, s.btnPrimary]}>
            <Text style={[s.btnText, s.btnTextPrimary]}>SUBMIT OTP</Text>
            </View>
@@ -106,13 +164,31 @@ const styles = StyleSheet.create({
         height: 40,
         paddingLeft: 6
     },
-    buttons: {
+    submitNumberButton: {
         paddingTop: 20,
         paddingLeft: 100,
         paddingRight: 100
     },
+    submitOTPButton : {
+      paddingBottom: 10,
+      paddingLeft: 100,
+      paddingRight: 100
+    },
     modal: {
       backgroundColor:'white',
       maxHeight:Dimensions.get('window').height / 2
+    },
+    OTPinput: {backgroundColor: '#f5f4f2',
+      justifyContent:'center',
+      fontWeight: '600',
+      alignSelf:"center",
+      fontSize: 18,
+      height:45,
+      width:'10%',
+      borderRadius: 30,
+      borderWidth: 0.5, 
+      borderColor: 'grey',
+      textAlign:'center',
+      marginBottom: 0
     }
 });
