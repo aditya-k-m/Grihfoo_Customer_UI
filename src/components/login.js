@@ -1,8 +1,12 @@
+//authored, aditya_k_m
+
+//importing depenmdencies
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, TouchableOpacity, Dimensions} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 import Modal from 'react-native-modal';
 
+//for using bootstrap styles package
 const
   BODY_COLOR = '#000022',
   TEXT_MUTED = '#888888'; 
@@ -19,41 +23,89 @@ const
 const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes);
 const {styles: s, constants: c} = bootstrapStyleSheet;
 
+//component object
 export default class Login extends Component{
+
+  //state initialization
   constructor(props){
       super(props);
       this.state={
-          currentText:"",
-          isModalVisible: false,
-          currentOTP: "",
-          pin1: "",
-          pin2: "",
-          pin3: "",
-          pin4: ""
+          currentText:"", //state of phone number
+          isModalVisible: false, //state of the visibility of OTP popup
+          currentOTP: "", //+REMOVABLE+ --CHECK
+          pin1: "", //state of 1st OTP digit
+          pin2: "", //2nd OTP digit
+          pin3: "", //3rd OTP digit 
+          pin4: "", //4th OTP digit
+          server_otp: "" //state of recording the OTP generated and sent by the srever via API call
       }
-  }  
+  }
+  
+
+  //async for API calls
+  async componentDidMount() {
+  try {
+    await fetch('http://192.168.43.75:3000/generate-otp', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body: formEncode({'phoneNo': this.state.currentText}) //encode data and form the body of the post req
+  })
+  .then((response) => response.json())
+  .then((generated_otp) => {
+    //updating the server_otp state
+    this.setState({
+      server_otp: generated_otp
+    });
+  });
+} catch(error) {
+    console.log(error);
+  };
+};
+
+  //function for updating the phone number's state 
   changeText(value){
       this.setState({
           currentText: value
       });
   }
+
+  //function to send entered phone number to the server and recieve the server generated OTP 
   submitNumber(){
-      console.log(this.state.currentText);
+      console.log("Phone Number: "+this.state.currentText);
+      this.componentDidMount(); //updating the phon number to the server and getting OTP
+
+    //Triggering the popup window
       this.setState({
         isModalVisible: true
       });
-  }
+    }
+  
+  //update OTP state
   changeOTP(value){
     this.setState({
       currentOTP: value
     });
   }
+
+  //submit OTP and match to navigate to homepage
   submitOTP(){
-    console.log(this.state.pin1+this.state.pin2+this.state.pin3+this.state.pin4);
+    let enteredOTP = this.state.pin1+this.state.pin2+this.state.pin3+this.state.pin4;
+    let serverOTP = this.state.server_otp;
+    if (enteredOTP.localeCompare(serverOTP) === 0){
+      console.log("Authentication Succeded");
+    }
+    else{
+      console.log("Authentication Failed");
+    }
     this.setState({
       isModalVisible: false
     });
   }
+
+  //close OTP popup
   closeModal(){
     this.setState({
       isModalVisible: false
@@ -63,7 +115,7 @@ export default class Login extends Component{
 
   render(){
     return(
-      <View>
+      <View> 
         <Text style={[s.h1, styles.heading]}>Verify your phone number</Text>
         <TextInput
         style={styles.textInput}
@@ -71,11 +123,12 @@ export default class Login extends Component{
         value={this.state.currentText}
         keyboardType={'numeric'}
         onChangeText={(value) => this.changeText(value)} />
-        <TouchableOpacity onPress={() => this.submitNumber()} style={[s.btnTouchable, styles.submitNumberButton]} >
+        <TouchableOpacity onPress={() => this.submitNumber()} style={[s.btnTouchable, styles.submitNumberButton]} > 
          <View style={[s.btn, s.btnPrimary]}>
          <Text style={[s.btnText, s.btnTextPrimary]}>GET OTP</Text>
          </View>
         </TouchableOpacity>
+
         <Modal animationIn="slideInUp" 
         animationOut="slideOutDown" 
         onBackdropPress={() => this.closeModal()} 
@@ -151,6 +204,7 @@ export default class Login extends Component{
   }
 }
 
+//styles
 const styles = StyleSheet.create({
     heading:{
       fontSize: 30,
@@ -192,3 +246,15 @@ const styles = StyleSheet.create({
       marginBottom: 0
     }
 });
+
+//local methods
+function formEncode(formdata){
+  let formBody = [];
+  for (var property in formdata){
+    var encodedKey = encodeURIComponent(property);
+    var encodedValue = encodeURIComponent(formdata[property]);
+    formBody.push(encodedKey + "=" + encodedValue);
+  }
+  formBody = formBody.join("&");
+  return formBody
+}
