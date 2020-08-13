@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, TouchableOpacity, Dimensions,AppRegistry} from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack'
 import {createAppContainer} from 'react-navigation'
-import Login from '../src/components/login'
-import Home from '../src/components/Home'
+import Login from '../src/screens/login'
+import Home from '../src/screens/Home'
 
 const screens = {
     Login: {
