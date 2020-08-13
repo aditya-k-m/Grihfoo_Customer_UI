@@ -7,10 +7,16 @@ import Home from '../src/components/Home'
 
 const screens = {
     Login: {
-        screen: Login
+        screen: Login,
+        navigationOptions: {
+            headerShown: false
+        }
     },
     Home: {
-        screen: Home
+        screen: Home,
+        navigationOptions : {
+            headerShown: false
+        }
     }
 }
 

@@ -2,7 +2,7 @@
 
 //importing depenmdencies
 import React, {Component} from 'react';
-import {StyleSheet, Text, TextInput, View, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, Text, TextInput, View, TouchableOpacity, Dimensions, Alert} from 'react-native';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 import Modal from 'react-native-modal';
 
@@ -100,6 +100,12 @@ export default class Login extends Component{
     }
     else{
       console.log("Authentication Failed");
+      Alert.alert(
+        "Oops !",
+        "Authentication Failed",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        {cancelable: true}
+      );
     }
     this.setState({
       isModalVisible: false
