@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View,Text} from 'react-native';
+import {View,Text, ScrollView} from 'react-native';
 
 import {createBottomTabNavigator,createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
@@ -7,14 +7,57 @@ import {Icon, colors} from 'react-native-elements';
 import Profile from './Profile';
 import Cart from './Cart';
 import Search from './Search';
+import HomeScreenCard from '../components/HomeScreenCard';
+import HomeSwiper from '../components/HomeSwiper';
+import VectorIcon from 'react-native-vector-icons/Entypo';
 
 class Home extends Component
 {
     render()
     {
         return (
-            <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
-                <Text style = {{fontSize:40}}>HomeScreen</Text>
+            <View style={{flex:1, backgroundColor: 'white', paddingTop: 20}}>
+                <VectorIcon style={{paddingHorizontal: 10, paddingBottom: 5}} name='location-pin' size={30} />
+                <Text style = {{fontSize: 15, fontWeight: '700', paddingHorizontal: 20, textAlign: 'left'}}>
+                    Yelahanka, Bengaluru - 560064
+                </Text>
+                
+                <ScrollView>
+                <View style={{height: 160, marginTop: 20}}>
+                    <Text style = {{paddingHorizontal:20, paddingBottom:10, fontWeight: '700'}}>Top picks for you</Text>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <HomeScreenCard imageUri='https://static.toiimg.com/thumb/54408184.cms?imgsize=148310&width=800&height=800' name="Panner Tikka Masala" />
+                        <HomeScreenCard imageUri='https://www.cubesnjuliennes.com/wp-content/uploads/2020/07/Punjabi-Aloo-Matar-Recipe.jpg' name="Aloo Matar" />
+                        <HomeScreenCard imageUri='https://www.cookwithmanali.com/wp-content/uploads/2019/04/Restaurant-Style-Dal-Makhani-500x500.jpg' name="Daal Makhani" />
+                        <HomeScreenCard imageUri='https://recipes.timesofindia.com/thumb/54289752.cms?width=1200&height=1200' name="Masala Dosa" />
+                    </ScrollView>
+                </View>
+
+                <View style={{height: 160, marginTop: 20}}>
+                    <Text style = {{paddingHorizontal:20, paddingBottom:10, fontWeight: '700'}}>Looking for a light breakfast ?</Text>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <HomeScreenCard imageUri='https://www.archanaskitchen.com/images/archanaskitchen/1-Author/Smitha_Kalluraya/Thatte_Idli.jpg' name="Thatte Idli" />
+                        <HomeScreenCard imageUri='https://www.theloveofspice.com/wp-content/uploads/2019/01/kanda-poha-recipe.jpg' name="Pohe" />
+                        <HomeScreenCard imageUri='https://assets.bonappetit.com/photos/57aca69153e63daf11a4d915/master/pass/california-veggie-sandwich.jpg' name="Veggie Sandwich" />
+                        <HomeScreenCard imageUri='https://recipes.timesofindia.com/thumb/54289752.cms?width=1200&height=1200' name="Masala Dosa" />
+                    </ScrollView>
+                </View>
+
+                <View style={{height: 160, marginTop: 20}}>
+                    <Text style = {{paddingHorizontal:20, paddingBottom:10, fontWeight: '700'}}>Top Offers</Text>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <HomeScreenCard imageUri='https://5.imimg.com/data5/YB/FP/MY-24215181/apple-juice-500x500.jpg' name="Apple Juice" />
+                        <HomeScreenCard imageUri='https://recipes.timesofindia.com/thumb/53099699.cms?width=1200&height=1200' name="Jalebi" />
+                        <HomeScreenCard imageUri='https://www.myweekendkitchen.in/wp-content/uploads/2011/07/bhature_recipe_Indian_puffed_bread.jpg' name="Chole Bhatoore" />
+                        <HomeScreenCard imageUri='https://www.indianhealthyrecipes.com/wp-content/uploads/2012/11/gulab-jamun-recipe-500x375.jpg' name="Gulabjamun" />
+                    </ScrollView>
+                </View>
+
+                <View style={{marginTop:10}}>
+                <Text style = {{paddingHorizontal:20, paddingBottom:10, fontWeight: '700'}}>Best chefs nearby</Text>
+                    <HomeSwiper />
+                </View>
+                </ScrollView>
             </View>
         )
     }

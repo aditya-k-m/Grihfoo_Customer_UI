@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { Container, Header, Item, Input, Icon, Button, Text } from 'native-base';
 import SearchResultCard from '../components/SearchResultCard';
+import VectorIcon from 'react-native-vector-icons/AntDesign';
+
+
 export default class SearchBarExample extends Component {
 
+  //setting up the states
   constructor(props){
       super(props);
       this.state = {
-          searchText: ""
+          searchText: "" //search text state
       }
   }
 
+  //to update the search Text state
   changeSearchText(value){
       this.setState({
           searchText: value
@@ -20,16 +25,10 @@ export default class SearchBarExample extends Component {
   render() {
     return (
       <Container>
-        <Header searchBar rounded>
           <Item>
-            <Icon name="ios-search" />
+            <VectorIcon style={{paddingHorizontal: 10}} name="search1" />
             <Input placeholder="Search" onChangeText={ (value) => this.changeSearchText(value) }/>
-            <Icon name="ios-people" />
           </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header>
         <SearchResultCard />
       </Container>
       

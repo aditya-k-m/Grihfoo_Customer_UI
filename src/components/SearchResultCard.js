@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
+
 export default class SearchResultCard extends Component {
   render() {
     return (
       <Container>
-        <Header />
         <Content>
           <Card style={{flex: 0}}>
             <CardItem>
