@@ -96,7 +96,7 @@ export default class Login extends Component{
     let serverOTP = this.state.server_otp;
     if (enteredOTP.localeCompare(serverOTP) === 0){
       console.log("Authentication Succeded");
-      this.props.navigation.navigate('Profile');
+      this.props.navigation.navigate('Home');
     }
     else{
       console.log("Authentication Failed");

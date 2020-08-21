@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper';
 
 
 
-export default class HeaderTitleExample extends Component {
+export default class Cart extends Component {
     show1 =()=>
     {
         alert('Clicked')
@@ -14,6 +14,10 @@ export default class HeaderTitleExample extends Component {
     clicked =()=>
     {
         alert('Clicked')
+    }
+    requestHomemaker = () =>
+    {
+        this.props.navigation.navigate('Recipt');
     }
   render() {
     return (
@@ -62,7 +66,7 @@ export default class HeaderTitleExample extends Component {
         
         <Button onPress={this.show1} style={styles.last}><Text style={{color:'white'}}>Add More Items</Text></Button>
         
-        <Button onPress={this.show1}style={styles.secondlast}><Text style={{color:'white'}}>Proceed to Request Homemaker</Text></Button>
+        <Button onPress={this.requestHomemaker}style={styles.secondlast}><Text style={{color:'white'}}>Proceed to Request Homemaker</Text></Button>
       </Container>
     );
   }

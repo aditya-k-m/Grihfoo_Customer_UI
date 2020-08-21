@@ -12,7 +12,19 @@ export default class Profile extends Component{
     }
     clicked =()=>
     {
-        alert('Clicked')
+        this.props.navigation.navigate('YourOrders');
+    }
+    completedOrders = ()=> 
+    {
+        this.props.navigation.navigate('CompletedOrders');
+    }
+    ongoingOrders = () => 
+    {
+        this.props.navigation.navigate('OngoingOrders');
+    }
+    pendingOrders = () =>
+    {
+        this.props.navigation.navigate('PendingOrders');
     }
     render()
     {
@@ -49,14 +61,14 @@ export default class Profile extends Component{
                 <View style={styles.side}>
                 {/* Pending Orders Tab */}
 
-                <TouchableOpacity onPress={this.clicked} style={styles.order}>
+                <TouchableOpacity onPress={this.pendingOrders} style={styles.order}>
 
                 <Text style={styles.text}>Pending Orders</Text>
 
                 </TouchableOpacity>     
 
                 {/* Ongoing Orders Tab */}
-                <TouchableOpacity onPress={this.clicked} style={styles.order}>
+                <TouchableOpacity onPress={this.ongoingOrders} style={styles.order}>
 
                 <Text style={styles.text}>Ongoing Orders</Text>
 
@@ -64,9 +76,9 @@ export default class Profile extends Component{
 
                 {/* Past Orders Tab */}
 
-                <TouchableOpacity onPress={this.clicked} style={styles.order}>
+                <TouchableOpacity onPress={this.completedOrders} style={styles.order}>
 
-                <Text style={styles.text}>Past Orders</Text>
+                <Text style={styles.text}>Completed Orders</Text>
 
                 </TouchableOpacity> 
                 </View>
