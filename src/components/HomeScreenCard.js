@@ -3,12 +3,17 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    TouchableOpacity
 } from "react-native";
 
 class HomeScreenCard extends Component {
+    touched = () => {
+        alert("Navigate to Chef's page");
+    }
     render() {
         return (
+            <TouchableOpacity onPress={() => this.touched()}>
             <View style={{ height: 130, width: 130, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd' }}>
                 <View style={{ flex: 2 }}>
                     <Image source={{uri: this.props.imageUri}}
@@ -19,6 +24,7 @@ class HomeScreenCard extends Component {
                     <Text>{this.props.name}</Text>
                 </View>
             </View>
+            </TouchableOpacity>
         );
     }
 }

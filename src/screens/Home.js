@@ -13,6 +13,34 @@ import VectorIcon from 'react-native-vector-icons/Entypo';
 
 class Home extends Component
 {
+    constructor(props){
+        super(props);
+        this.state = {
+            topPicksMenu: [],
+            timeBasedMenu: [],
+            topOffersMenu: [],
+            chefsNearby: []
+        }
+    }
+
+    async componentDidMount(){
+        try {
+            await fetch('http://192.168.43.75:3000/dishes2')
+            .then((response) => response.json())
+            .then((menus) => {
+                this.setState({
+                    topPicksMenu: menus,
+                    timeBasedMenu: menus,
+                    topOffersMenu: menus
+                });
+            });
+        } catch(error){
+            console.log("There was an error connecting: "+error);
+        }
+        console.log(this.state.topPicksMenu);
+    }
+    
+
     render()
     {
         return (
@@ -26,10 +54,7 @@ class Home extends Component
                 <View style={{height: 160, marginTop: 20}}>
                     <Text style = {{paddingHorizontal:20, paddingBottom:10, fontWeight: '700'}}>Top picks for you</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <HomeScreenCard imageUri='https://healthynibblesandbits.com/wp-content/uploads/2019/07/Paneer-Tikka-Masala-1.jpg' name="Panner Tikka Masala" />
-                        <HomeScreenCard imageUri='https://www.cubesnjuliennes.com/wp-content/uploads/2020/07/Punjabi-Aloo-Matar-Recipe.jpg' name="Aloo Matar" />
-                        <HomeScreenCard imageUri='https://www.cookwithmanali.com/wp-content/uploads/2019/04/Restaurant-Style-Dal-Makhani-500x500.jpg' name="Daal Makhani" />
-                        <HomeScreenCard imageUri='https://recipes.timesofindia.com/thumb/54289752.cms?width=1200&height=1200' name="Masala Dosa" />
+                        { this.state.topPicksMenu.map(item => (<HomeScreenCard imageUri={item.picLink} name={item.name} />) )}
                     </ScrollView>
                 </View>
 

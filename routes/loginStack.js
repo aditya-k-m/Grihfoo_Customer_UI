@@ -7,6 +7,8 @@ import Recipt from '../src/screens/Recipt'
 import CompletedOrders from '../src/screens/CompletedOrders'
 import PendingOrders from '../src/screens/PendingOrders'
 import OngoingOrders from '../src/screens/OngoingOrders'
+import ChefPage from '../src/screens/ChefPage'
+import Register from '../src/screens/Register'
 
 const screens = {
     Login: {
@@ -43,6 +45,18 @@ const screens = {
         screen: Recipt,
         navigationOptions: {
             headerShown: true
+        }
+    },
+    ChefPage: {
+        screen: ChefPage,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            headerShown: false
         }
     }
 }
