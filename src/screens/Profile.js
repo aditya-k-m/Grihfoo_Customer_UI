@@ -1,11 +1,42 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList, Image, SafeAreaView, ScrollView } from 'react-native';
+import VectorIcon from 'react-native-vector-icons/AntDesign';
 
 // import App from './Hello';
 
 
 
 export default class Profile extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: "",
+            firstname: "",
+            lastname: "",
+            email: ""
+        }
+    }
+
+    async componentDidMount() {
+        try {
+            fetch('http://customergrihfoo.ap-south-1.elasticbeanstalk.com/gf/customer/7')
+                .then((response) => response.json())
+                .then((personalInfo) => {
+                    this.setState({
+                        id: personalInfo.id,
+                        firstname: personalInfo.firstName,
+                        lastname: personalInfo.lastName,
+                        email: personalInfo.email
+                    });
+                    console.log(personalInfo);
+                });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     show1 = () => {
         alert('Clicked')
     }
@@ -21,29 +52,38 @@ export default class Profile extends Component {
     pendingOrders = () => {
         this.props.navigation.navigate('PendingOrders');
     }
+    toEdit = () => {
+        this.props.navigation.navigate('Edit');
+    }
     render() {
         return (
 
             <View style={styles.container}>
                 <ScrollView style={styles.scroll}>
                     <View style={styles.head}>
-                        <Text style={styles.hi}>Hi,Harshit!</Text>
+                        <Text style={styles.hi}>Hi, {this.state.firstname} !</Text>
 
                         {/* Picture */}
-                        <Image style={styles.image} source={require('../assets/HARSH.png')} />
+                        <Image style={styles.image} source={{uri: 'https://static.wixstatic.com/media/cd5c35_e4e3005990ea4a879a280fd6dfe3bdbf~mv2.jpg/v1/fill/w_312,h_318,al_c,q_80,usm_0.66_1.00_0.01/empty-dp.webp'}} />
                     </View>
 
                     <View style={styles.box}>
                         {/* Personal Information Heading */}
                         <Text style={styles.top}>Personal Information</Text>
+                        <TouchableOpacity onPress={this.toEdit}>
+                            <View style={{ flexDirection: 'row', marginLeft: 359 }}>
+
+                                <VectorIcon name='edit' size={16} style={{ paddingTop: 3 }} />
+                                <Text style={{ paddingLeft: 3 }}>Edit</Text>
+
+                            </View>
+                        </TouchableOpacity>
                         {/* Personal Information Tab */}
 
                         <Text style={styles.bottom}>
 
-                            Name: Harshit Choudhary{'\n'}
-                    Address:204A Nagenahalli Bangalore{'\n'}
-                    Email:harshorton@gmail.Com{'\n'}
-                    Phone: 9148055977{'\n'}
+                            Name: {this.state.firstname + ' '+ this.state.lastname} {'\n'}
+                            Email:{this.state.email}{'\n'}
 
                         </Text>
 
@@ -86,19 +126,19 @@ export default class Profile extends Component {
                         {/* Faq Text */}
                         <Text style={styles.top}>
                             FAQs
-                </Text>
+                     </Text>
 
 
                         {/* Faqs Tab */}
                         <Text style={styles.bottom}>
                             A paragraph of text with an unassigned HyperLink.{'\n'}
-                    A second row with a web link
-                </Text>
+                            A second row with a web link
+                       </Text>
                     </View>
 
 
                     {/* Customer Support Tab  */}
-
+                    <View style={{flexDirection: 'row', marginTop: -25}}>
                     <TouchableOpacity onPress={this.clicked} style={styles.order}>
 
                         <Text style={styles.text}>Customer Support</Text>
@@ -112,7 +152,7 @@ export default class Profile extends Component {
                         <Text style={styles.text}>Logout</Text>
 
                     </TouchableOpacity>
-
+                    </View>
 
 
                 </ScrollView>
@@ -154,12 +194,14 @@ const styles = StyleSheet.create({
         width: 100,
         backgroundColor: '#DDDDDD',
         borderRadius: 200,
-        marginLeft: 120,
+        marginLeft: 80,
         borderWidth: 10,
 
     },
     box: {
         width: '100%',
+        paddingBottom: 0,
+        marginBottom: 0
 
     },
     top: {
@@ -170,7 +212,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     bottom: {
+        paddingTop: 0,
         padding: 10,
+        paddingBottom: 0,
         height: 100
     },
     side: {

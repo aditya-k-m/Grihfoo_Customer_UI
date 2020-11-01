@@ -9,6 +9,7 @@ import PendingOrders from '../src/screens/PendingOrders'
 import OngoingOrders from '../src/screens/OngoingOrders'
 import ChefPage from '../src/screens/ChefPage'
 import Register from '../src/screens/Register'
+import Edit from '../src/screens/Edit'
 
 const screens = {
     Login: {
@@ -57,6 +58,13 @@ const screens = {
         screen: Register,
         navigationOptions: {
             headerShown: false
+        }
+    },
+    Edit: {
+        screen: Edit,
+        navigationOptions: {
+            headerShown: true,
+            title: 'Edit your info' 
         }
     }
 }

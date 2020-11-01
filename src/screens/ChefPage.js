@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, BackHandler } from 'react-native';
+import { View, Text, Image, StyleSheet, BackHandler, TouchableOpacity } from 'react-native';
 import Header from '../components/Header';
 import FoodSection from '../components/FoodSection';
 import { ScrollView } from 'react-native-gesture-handler';
+import VectorIcon from 'react-native-vector-icons/AntDesign';
 export default class MainPage extends Component {
+    backClicked() {
+        this.props.navigation.goBack();
+    }
     render() {
         return (
             <View>
-                <Header />
-                <Image style={styles.image} source={require('../assets/HARSH.png')} />
+                <View style={{ marginHorizontal: 20, paddingVertical: 20, flexDirection: 'row' }}>
+                    <TouchableOpacity onPress={() => this.backClicked()} style={{flex: 1}}>
+                        <VectorIcon name='arrowleft' size={34} style={{ paddingTop: 7 }} />
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 34, fontWeight: 'bold', paddingLeft: 20, flex: 5 }}>Chef Namritha</Text>
+                    <Image style={styles.image} source={require('../assets/HARSH.png')} />
+                </View>
+                
 
                 {/* Text on homemaker rating and Speciality */}
 
@@ -43,14 +53,13 @@ export default class MainPage extends Component {
 }
 const styles = StyleSheet.create({
     image: {
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
         borderRadius: 200,
-        marginLeft: 285,
         marginBottom: 5,
+        marginLeft: 15,
         borderWidth: 10,
-        left: 65,
-        top: 4
+        flex: 1
     },
     namratha: {
         fontSize: 20,

@@ -6,25 +6,25 @@ export default class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
+            firstName: "",
+            lastName: "",
             email: "",
-            phoneNo: "",
             isModalVisible: false, //state of the visibility of OTP popup
         }
     }
 
     async callRegister() {
         try {
-            await fetch('http://192.168.43.75:3000/register', {
+            await fetch('http://customergrihfoo.ap-south-1.elasticbeanstalk.com/gf/customer', {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                    'Content-Type': 'application/json'
                 },
-                body: formEncode({
-                    'name': this.state.name,
-                    'email': this.state.email,
-                    'phoneNo': this.state.phoneNo
+                body: JSON.stringify({
+                    'firstName': this.state.firstName,
+                    'lastName': this.state.lastName,
+                    'email': this.state.email
                 }) //encode data and form the body of the post req
             })
         } catch (error) {
@@ -32,9 +32,15 @@ export default class Register extends Component {
         };
     };
 
-    upadteName(value) {
+    upadteFirstName(value) {
         this.setState({
-            name: value
+            firstName: value
+        });
+    }
+
+    updateLastName(value) {
+        this.setState({
+            lastName: value
         });
     }
 
@@ -44,16 +50,10 @@ export default class Register extends Component {
         });
     }
 
-    updatePhone(value) {
-        this.setState({
-            phoneNo: value
-        });
-    }
-
     submit() {
-        console.log("Name: " + this.state.name);
+        console.log("First Name: " + this.state.firstName);
+        console.log("Last Name: " + this.state.lastName);
         console.log("Email: " + this.state.email);
-        console.log("Phone Number: " + this.state.phoneNo);
         this.callRegister();
         this.setState({
             isModalVisible: true
@@ -66,22 +66,22 @@ export default class Register extends Component {
                 <Text style={{ fontSize: 34, fontWeight: 'bold', marginHorizontal: 45, marginTop: 30 }}>Register to GrihFoo !</Text>
                 <View style={{ marginTop: 80, alignItems: 'center' }}>
                     <TextInput
-                        placeholder="Enter your Name"
+                        placeholder="Enter your First Name"
                         style={{ textAlign: 'center' }}
-                        value={this.state.name}
-                        onChangeText={(value) => this.upadteName(value)}
+                        value={this.state.firstName}
+                        onChangeText={(value) => this.upadteFirstName(value)}
                     />
                     <TextInput
-                        placeholder="Enter your emailId"
+                        placeholder="Enter your Last Name"
+                        style={{ textAlign: 'center' }}
+                        value={this.state.lastName}
+                        onChangeText={(value) => this.updateLastName(value)}
+                    />
+                    <TextInput
+                        placeholder="Enter your email"
                         style={{ textAlign: 'center' }}
                         value={this.state.email}
                         onChangeText={(value) => this.updateEmail(value)}
-                    />
-                    <TextInput
-                        placeholder="Enter your phone number"
-                        style={{ textAlign: 'center' }}
-                        value={this.state.phoneNo}
-                        onChangeText={(value) => this.updatePhone(value)}
                     />
                     <TouchableOpacity onPress={() => this.submit()} style={{ backgroundColor: '#00b7c2', height: 40, width: 100, marginVertical: 30 }}>
                         <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', paddingTop: 8, paddingLeft: 24 }}>Register</Text>
