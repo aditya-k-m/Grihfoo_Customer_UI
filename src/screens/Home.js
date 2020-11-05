@@ -1,15 +1,17 @@
 import React,{Component} from 'react';
 import {View,Text, ScrollView} from 'react-native';
 
-import {createBottomTabNavigator,createAppContainer} from 'react-navigation';
+import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
-import {Icon, colors} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import Profile from './Profile';
 import Cart from './Cart';
 import Search from './Search';
 import HomeScreenCard from '../components/HomeScreenCard';
 import HomeSwiper from '../components/HomeSwiper';
 import VectorIcon from 'react-native-vector-icons/Entypo';
+
+import Login from './login';
 
 class Home extends Component
 {
@@ -37,7 +39,7 @@ class Home extends Component
         } catch(error){
             console.log("There was an error connecting: "+error);
         }
-        console.log(this.state.topPicksMenu);
+        console.log(this.props.navigation.getParam('customer_id', '0'));
     }
     
 

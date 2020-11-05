@@ -10,6 +10,7 @@ import OngoingOrders from '../src/screens/OngoingOrders'
 import ChefPage from '../src/screens/ChefPage'
 import Register from '../src/screens/Register'
 import Edit from '../src/screens/Edit'
+import Profile from '../src/screens/Profile'
 
 const screens = {
     Login: {
@@ -65,6 +66,12 @@ const screens = {
         navigationOptions: {
             headerShown: true,
             title: 'Edit your info' 
+        }
+    },
+    Profile: {
+        screen: Profile,
+        navigationOptions: {
+            headerShown: false,
         }
     }
 }

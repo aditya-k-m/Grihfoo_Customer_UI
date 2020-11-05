@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import {Text,View,Image,TextInput} from 'react-native';
 import { Button } from 'native-base';
+import { withNavigation } from 'react-navigation';
 
-class editScreen extends Component{
+class Edit extends Component{
 
     constructor(props){
         super(props);
         this.state={
-            firstname : '',
-            lastname : '',
-            email : '',
+            firstname : "",
+            lastname : "",
+            email : "",
             id : 14
         }
     }
@@ -28,16 +29,11 @@ class editScreen extends Component{
                 email: this.state.email
             })//encode data and form the body of the post req
           }).then((response) => console.log(response));
-          console.log(this.state.firstname);
-          console.log(this.state.id);
+          // withNavigation().goBack();
         } catch (error) {
           console.log(error);
         };
       };
-    // show1() {
-    //   console.log(this.state.firstname);
-    //   console.log(this.state.email);
-    // }
     updateFirstName(values){
        this.setState({
            firstname:values
@@ -76,10 +72,10 @@ class editScreen extends Component{
                    style={{top:45,textAlign:'center',borderWidth:1}}
                  />
                  
-                <Button onPress={()=>{this.show1()}}style={{fontSize:25,top:5,left:125,paddingRight:55,paddingLeft:55,backgroundColor:'rgba(20,80,90,0.75)'}}><Text >Submit</Text></Button>
+                <Button onPress={()=>{this.show1()}}style={{fontSize:25,top:5,left:125,paddingRight:55,paddingLeft:55,marginTop:75,backgroundColor:'rgba(20,80,90,0.75)'}}><Text styles={{color: "white"}}>Submit</Text></Button>
              </View>
          )
      }
 
 }
-export default editScreen;
+export default Edit;
