@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList, Image, SafeAreaView, ScrollView } from 'react-native';
+import { color } from 'react-native-reanimated';
 import VectorIcon from 'react-native-vector-icons/AntDesign';
 
 // import App from './Hello';
@@ -20,7 +21,7 @@ export default class Profile extends Component {
 
     async componentDidMount() {
         try {
-            fetch('http://customergrihfoo.ap-south-1.elasticbeanstalk.com/gf/customer/7')
+            fetch('http://customergrihfoo.ap-south-1.elasticbeanstalk.com/gf/customer/'+this.props.navigation.getParam('customer_id', '0'))
                 .then((response) => response.json())
                 .then((personalInfo) => {
                     this.setState({
@@ -35,10 +36,11 @@ export default class Profile extends Component {
         catch (error) {
             console.log(error);
         }
+        console.log(this.props.navigation.getParam('customer_id', '0')); //customer Id passed from the login screen
     }
 
-    show1 = () => {
-        alert('Clicked')
+    logout = () => {
+        this.props.navigation.navigate('Login');
     }
     clicked = () => {
         this.props.navigation.navigate('YourOrders');
@@ -53,7 +55,11 @@ export default class Profile extends Component {
         this.props.navigation.navigate('PendingOrders');
     }
     toEdit = () => {
-        this.props.navigation.navigate('Edit');
+        this.props.navigation.navigate('Edit', {
+            firstName: this.state.firstname,
+            lastName: this.state.lastname,
+            email: this.state.email
+        });
     }
     render() {
         return (
@@ -83,7 +89,7 @@ export default class Profile extends Component {
                         <Text style={styles.bottom}>
 
                             Name: {this.state.firstname + ' '+ this.state.lastname} {'\n'}
-                            Email:{this.state.email}{'\n'}
+                            Email: {this.state.email}{'\n'}
 
                         </Text>
 
@@ -147,7 +153,7 @@ export default class Profile extends Component {
 
                     {/* LogOut Tab  */}
 
-                    <TouchableOpacity onPress={this.show1} style={styles.order}>
+                    <TouchableOpacity onPress={this.logout} style={styles.order}>
 
                         <Text style={styles.text}>Logout</Text>
 
@@ -209,7 +215,8 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 10,
         // width:"100%",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "white"
     },
     bottom: {
         paddingTop: 0,

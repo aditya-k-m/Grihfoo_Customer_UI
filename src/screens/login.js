@@ -37,7 +37,8 @@ export default class Login extends Component {
       pin2: "", //2nd OTP digit
       pin3: "", //3rd OTP digit 
       pin4: "", //4th OTP digit
-      server_otp: "" //state of recording the OTP generated and sent by the srever via API call
+      server_otp: "", //state of recording the OTP generated and sent by the srever via API call
+      customer_id: '7'
     }
   }
 
@@ -96,7 +97,10 @@ export default class Login extends Component {
     let serverOTP = this.state.server_otp;
     if (enteredOTP.localeCompare(serverOTP) === 0) {
       console.log("Authentication Succeded");
-      this.props.navigation.navigate('Home');
+      this.setState({currentText: ""});
+      this.props.navigation.navigate('Home', {
+        customer_id: this.state.customer_id
+      });
     }
     else {
       console.log("Authentication Failed");
